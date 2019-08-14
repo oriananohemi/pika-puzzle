@@ -16,3 +16,23 @@ var currentX = 0;
 var currentY = 0;
 var currentPosX = 0;
 var currentPosY = 0;
+
+function seleccionarElemento(evt) {
+  elementSelect = evt.target;
+  currentX = evt.clientX;
+  currentY = evt.clientY;
+  currentPosX = parseFloat(elementSelect.getAttribute("x"));
+  currentPosY = parseFloat(elementSelect.getAttribute("y"));
+  elementSelect.setAttribute("onmousemove", "moverElemento(evt)");
+}
+
+function moverElemento(evt) {
+  var dx = evt.clientX - currentX;
+  var dy = evt.clientY - currentY;
+  currentPosX = currentPosX + dx;
+  currentPosY = currentPosY + dy;
+  elementSelect.setAttribute("x", currentPosX);
+  elementSelect.setAttribute("y", currentPosY);
+  currentX = evt.clientX;
+  currentY = evt.clientY;
+}
