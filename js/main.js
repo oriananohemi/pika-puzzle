@@ -35,4 +35,15 @@ function moverElemento(evt) {
   elementSelect.setAttribute("y", currentPosY);
   currentX = evt.clientX;
   currentY = evt.clientY;
+  elementSelect.setAttribute("onmouseout", "deseleccionarElemento(evt)");
+  elementSelect.setAttribute("onmouseup", "deseleccionarElemento(evt)");
+}
+
+function deseleccionarElemento(evt) {
+  if (elementSelect != 0) {
+    elementSelect.removeAttribute("onmousemove");
+    elementSelect.removeAttribute("onmouseout");
+    elementSelect.removeAttribute("onmouseup");
+    elementSelect = 0;
+  }
 }
