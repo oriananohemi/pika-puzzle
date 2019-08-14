@@ -37,6 +37,7 @@ function moverElemento(evt) {
   currentY = evt.clientY;
   elementSelect.setAttribute("onmouseout", "deseleccionarElemento(evt)");
   elementSelect.setAttribute("onmouseup", "deseleccionarElemento(evt)");
+  iman();
 }
 
 function deseleccionarElemento(evt) {
@@ -45,5 +46,31 @@ function deseleccionarElemento(evt) {
     elementSelect.removeAttribute("onmouseout");
     elementSelect.removeAttribute("onmouseup");
     elementSelect = 0;
+  }
+}
+
+var entorno = document.getElementById("entorno");
+
+function reordenar(evt) {
+  var padre = evt.target.parentNode;
+  var clone = padre.cloneNode(true);
+  var id = padre.getAttribute("id");
+  entorno.removeChild(document.getElementById(id));
+  entorno.appendChild(clone);
+  return entorno.lastChild.firstChild;
+}
+
+var origX = [200, 304, 466, 200, 333, 437, 200, 304, 466];
+var origY = [100, 100, 100, 233, 204, 233, 337, 366, 337];
+
+function iman() {
+  for (var i = 0; i < piezas.length; i++) {
+    if (
+      Math.abs(currentPosX - origX[i]) < 15 &&
+      Math.abs(currentPosY - origY[i]) < 15
+    ) {
+      elementSelect.setAttribute("x", origX[i]);
+      elementSelect.setAttribute("y", origY[i]);
+    }
   }
 }
