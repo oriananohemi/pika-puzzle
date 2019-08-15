@@ -11,14 +11,14 @@ for (var i = 0; i < piezas.length; i++) {
   piezas[i].setAttribute("onmousedown", "seleccionarElemento(evt)");
 }
 
-var elementSelect = 0;
+var elementSelect;
 var currentX = 0;
 var currentY = 0;
 var currentPosX = 0;
 var currentPosY = 0;
 
 function seleccionarElemento(evt) {
-  elementSelect = evt.target;
+  elementSelect = reordenar(evt);
   currentX = evt.clientX;
   currentY = evt.clientY;
   currentPosX = parseFloat(elementSelect.getAttribute("x"));
@@ -41,11 +41,12 @@ function moverElemento(evt) {
 }
 
 function deseleccionarElemento(evt) {
+  testing();
   if (elementSelect != 0) {
     elementSelect.removeAttribute("onmousemove");
     elementSelect.removeAttribute("onmouseout");
     elementSelect.removeAttribute("onmouseup");
-    elementSelect = 0;
+    elementSelect = undefined;
   }
 }
 
@@ -57,7 +58,7 @@ function reordenar(evt) {
   var id = padre.getAttribute("id");
   entorno.removeChild(document.getElementById(id));
   entorno.appendChild(clone);
-  return entorno.lastChild.firstChild;
+  return entorno.lastChild.querySelector("image");
 }
 
 var origX = [200, 304, 466, 200, 333, 437, 200, 304, 466];
@@ -72,5 +73,23 @@ function iman() {
       elementSelect.setAttribute("x", origX[i]);
       elementSelect.setAttribute("y", origY[i]);
     }
+  }
+}
+
+var win = document.getElementById("win");
+
+function testing() {
+  var bienUbicada = 0;
+  var padres = document.getElementsByClassName("padre");
+  for (var i = 0; i < piezas.length; i++) {
+    var posX = parseFloat(padres[i].querySelector("image").getAttribute("x"));
+    var posY = parseFloat(padres[i].querySelector("image").getAttribute("y"));
+    ide = padres[i].getAttribute("id");
+    if (origX[ide] == posX && origY[ide] == posY) {
+      bienUbicada = bienUbicada + 1;
+    }
+  }
+  if (bienUbicada == 9) {
+    win.play();
   }
 }
